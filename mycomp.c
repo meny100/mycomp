@@ -19,11 +19,21 @@ int main()
 			{'F', F},
 			{'#', NULL}
 		};*/
-	int i = 0;
 	int stop_flag = 0;
-	int read_status;
-	char *line_input;
-	char *tokens_array[TOKENS_ARRAY_SIZE] = {'\0'};
+	char *cmd_array[CMD_ARR_SIZE] =  {
+			"read_comp",
+			"print_comp",
+			"add_comp",
+			"sub_comp",
+			"mult_comp_real",
+			"mult_comp_img",
+			"mult_comp_comp",
+			"abs_comp",
+			"stop",
+			"not_valid"
+		};
+	int state_cmd;/*between 0-9*/
+	
 
 	printf("This program deals actions with complex numbers. There are 6 complex numbers, A-F and 6 actions:\n");
 	printf("1) read_comp NAME, REAL1, REAL2.\n");
@@ -34,51 +44,41 @@ int main()
 	printf("6) mult_comp_img NAME1, IMG.\n");
 	printf("7) mult_comp_comp NAME1, NAME2.\n");
 	printf("8) abs_comp NAME.\n");
-	printf("9) stop.\n\n");
+	printf("9) stop.\n");
 
 	while (!stop_flag)
 	{
-		printf("Please type your action:\n");
+		char *line_input;
+		char *tokens_array[TOKENS_ARRAY_SIZE];
+		int i;
+		int valid_line;
+
+		printf("\nPlease type your action:\n");
 		/*read_line reads and store the input inside line_input if func succeed*/
-		line_input = (char *)malloc(FIRST_SIZE);
-		read_status = read_line_and_add_spaces(line_input);
-		if(read_status == ERROR_EOF)
-		{
-			printf("ERROR: exit from the program allowed only by stop() function!\n");
-			return ERROR;
-		}
-		if(read_status == ERROR_ALLOCATION)
-		{
-			printf("ERROR: allocation failed, no free space found.\n");
-			return ERROR;
-		}
-		printf("The line after func: %s\n", line_input);
+		line_input = (char *)malloc(FIRST_SIZE*sizeof(char));
+		line_input = read_line_and_add_spaces(line_input, FIRST_SIZE);
 
+		/*split the line into tokens and store them in tokens array*/
 		split_input(line_input, tokens_array, TOKENS_ARRAY_SIZE);
-		printf("The tokens_array after split:\n");
-		for(; i < TOKENS_ARRAY_SIZE; i++)
-			printf("%d) %s\n", i+1, tokens_array[i]);
-		/*scan into line_input;
-		struct of parser(line_input); // hard part
-		analyzeParserResult();
-		check the analyze --> error or execute.
 
+		/*The tokens_array[0] is the command*/
+		for(i = 0; i < CMD_ARR_SIZE; i++)
+			if(strcmp(tokens_array[0], cmd_array[i]) == 0)
+			{
+				state_cmd = i;
+				printf("on strcmp %d %s",i, cmd_array[i]);
+				break;
+			}
 
+		/*checking the pattern of the rest of the string according to command was choose.*/
+		valid_line = check_pattern(state_cmd, tokens_array);
 
-		if(fgets("%s", line_input))
-		{
-			strtok(line_input, " ,");
-			for(i = 0; i < 4; i++)
-				strtok(NULL, " ,"); 
-			for(i = 0; cmd[i].func != NULL; i++)
-				if(strcmp(command, cmd[i].name)==0)
-					break;
+		if(valid_line == SUCCESS){
+			/*active the functions*/
+			printf("SUCCESS!!");
+		}
 
-			if(cmd[i].func == NULL)
-				printf("Command does not exist: %s", command);
-			else
-				(*(cmd[i].func))();
-		}*/
+		free(line_input);
 	}
 	return 0;
 }
