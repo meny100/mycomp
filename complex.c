@@ -1,59 +1,60 @@
 #include "complex.h"
 
+
 void read_comp(complex *c, float real, float img)
 {
 	(*c).real = real;
 	(*c).img = img;
 }
 
-void print_comp(complex c)
+void print_comp(complex comp)
 {
-	printf("%.2f + (%.2f)i \n", c.real, c.img);
+	char sign = comp.img >= 0 ? '+':' ';
+	printf("%.2f %c (%.2f)i \n", comp.real, sign, comp.img);
 }
 
 void add_comp(complex a, complex b)
 {
-	complex new;
-	new.real = a.real + b.real;
-	new.img = a.img + b.img;
-	print_comp(new);
+	complex result;
+	result.real = a.real + b.real;
+	result.img = a.img + b.img;
+	print_comp(result);
 }
 
 void sub_comp(complex a, complex b)
 {
-	complex new;
-	new.real = a.real - b.real;
-	new.img = a.img - b.img;
-	print_comp(new);
+	complex result;
+	result.real = a.real - b.real;
+	result.img = a.img - b.img;
+	print_comp(result);
 }
 
-void mult_comp_real(complex comp_a, float real)
+void mult_comp_real(complex comp, float real)
 {
-	complex new;
-	new.real = comp_a.real*real;
-	new.img = comp_a.img*real;
-	print_comp(new);
+	complex result;
+	result.real = comp.real*real;
+	result.img = comp.img*real;
+	print_comp(result);
 }
 
-void mult_comp_img(complex comp_a, float img)
+void mult_comp_img(complex comp, float img)
 {
-	complex new;
-	new.real = -(img*comp_a.img);
-	new.img = comp_a.real*img;
-	print_comp(new);
+	complex result;
+	result.real = -(img*comp.img);
+	result.img = comp.real*img;
+	print_comp(result);
 }
 
 void mult_comp_comp(complex a, complex b)
 {
-	complex new;
-	new.real = a.real*b.real - a.img*b.img;
-	new.img = a.real*b.img + a.img*b.real;
-	print_comp(new);
+	complex result;
+	result.real = a.real*b.real - a.img*b.img;
+	result.img = a.real*b.img + a.img*b.real;
+	print_comp(result);
 }
 
-void abs_comp(complex c)
+void abs_comp(complex comp)
 {
-	float result = sqrt(pow(c.real, 2) + pow(c.img, 2));
-
+	float result = sqrt(pow(comp.real, 2) + pow(comp.img, 2));
 	printf("%.2f", result);
 }
