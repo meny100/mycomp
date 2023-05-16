@@ -4,7 +4,7 @@ char *read_line_and_add_spaces(char *str, int actual_size)
 {
 	int curr = 0;
 	char *tempP;/*help to free str allocation if realloc failed*/
-	while((str[curr] = getchar()) != '\n' && str[curr] != EOF)
+	while((str[curr] = getchar()) != EOF && str[curr] != '\n')
 	{
 		/*performing re-allocation if the user type chars more than the given space*/
 		/*if str[curr] == ',' we need to ensure that we have free space ahead to separate it*/
@@ -28,9 +28,9 @@ char *read_line_and_add_spaces(char *str, int actual_size)
 				str[++curr] = ' ';
 			}
 		}
-		
 		curr++;
 	}
+
 
 	if(str[curr] == EOF)
 	{
@@ -45,10 +45,9 @@ char *read_line_and_add_spaces(char *str, int actual_size)
 void split_input(char *str, char *str_array[], int size)
 {
 	int i = 0;
-	str_array[i] = strtok(str, " \t");
-	
+	str_array[i] = strtok(str, " \t\n");
 	for(i = 1; i < size; i++)
-		str_array[i] = strtok(NULL, " \t");
+		str_array[i] = strtok(NULL, " \t\n");
 }
 
 int check_pattern(int state_cmd, char *tokens_array[])
@@ -56,7 +55,7 @@ int check_pattern(int state_cmd, char *tokens_array[])
 	/*to each command there is a special valid pattern, we deciding this by state_cmd*/
 	switch (state_cmd)
 	{
-		case 0:
+		case READ_COMP:
 		{
 			if(is_a_valid_complex_name(tokens_array[1]) == ERROR)
 				return ERROR;
@@ -73,33 +72,55 @@ int check_pattern(int state_cmd, char *tokens_array[])
 				
 			return SUCCESS;
 		}
-		case 1:
-		case 7:
+		case PRINT_COMP:
+		case ABS_COMP:
 		{
+			if(is_a_valid_complex_name(tokens_array[1]) == ERROR)
+				return ERROR;
+			if(is_a_null(tokens_array[2]) == ERROR)
+				return ERROR;
 			return SUCCESS;
 		}
-		case 2:
-		case 3:
-		case 6:
+		case ADD_COMP:
+		case SUB_COMP:
+		case MULT_COMP_COMP:
 		{
+			if(is_a_valid_complex_name(tokens_array[1]) == ERROR)
+				return ERROR;
+			if(is_a_valid_comma(tokens_array[2]) == ERROR)
+				return ERROR;
+			if(is_a_valid_complex_name(tokens_array[3]) == ERROR)
+				return ERROR;
+			if(is_a_null(tokens_array[4]) == ERROR)
+				return ERROR;
 			return SUCCESS;
 		}
-		case 4:
-		case 5:
+		case MULT_COMP_REAL:
+		case MULT_COMP_IMG:
 		{
+			if(is_a_valid_complex_name(tokens_array[1]) == ERROR)
+				return ERROR;
+			if(is_a_valid_comma(tokens_array[2]) == ERROR)
+				return ERROR;
+			if(is_a_valid_num(tokens_array[3]) == ERROR)
+				return ERROR;
+			if(is_a_null(tokens_array[4]) == ERROR)
+				return ERROR;
 			return SUCCESS;
 		}
-		case 8:
+		case STOP:
 		{
+			if(is_a_null(tokens_array[1]) == ERROR)
+				return ERROR;
 			return SUCCESS;
 		}
-		case 9:
+		case UNDEFINED_CMD:
 		{
 			printf("Undefined command name.\n");
 			return ERROR;
 		}
 		default:
-			printf("Unknown error was occurred\n");
+			printf("Unknown error occurred\n");
 			return ERROR;
 	}
 }
@@ -111,14 +132,14 @@ void stop(int *stop_flag)
 
 int is_a_valid_complex_name(char *str)
 {
-	if(strlen(str) > 1)
+	if(str == NULL)
 		{
-			printf("Undefined complex variable1.\n");
+			printf("Complex number name is missing.\n");
 			return ERROR;
 		}
-	if(str[0] < 'A' || str[0] > 'F')
+	if(strlen(str) > 1 || str[0] < 'A' || str[0] > 'F')
 		{
-			printf("Undefined complex variable2.\n");
+			printf("Undefined complex variable.\n");
 			return ERROR;
 		}
 	return SUCCESS;
@@ -126,7 +147,7 @@ int is_a_valid_complex_name(char *str)
 
 int is_a_valid_comma(char *str)
 {
-	if(strlen(str) > 1 || str[0] != ',')
+	if(str == NULL ||  strlen(str) > 1 || str[0] != ',')
 		{
 			printf("Comma is missing.\n");
 			return ERROR;
@@ -137,8 +158,13 @@ int is_a_valid_comma(char *str)
 int is_a_valid_num(char *str)
 {
 	char *p;
+	if(str == NULL)
+		{
+			printf("Number is missing.\n");
+			return ERROR;
+		}
 	strtod(str, &p);
-	if(p != NULL)
+	if(*p != '\0')
 		{
 			printf("Invalid parameter - not a number.\n");
 			return ERROR;
@@ -148,10 +174,32 @@ int is_a_valid_num(char *str)
 
 int is_a_null(char *str)
 {
-	if(str != NULL)
+	if(strcmp(str, "\0") == 0 || str == NULL)
 		{
-			printf("Too many operands.\n");
+			printf("Too many characters for this operator.\n");
 			return ERROR;
 		}
 	return SUCCESS;
+}
+
+complex get_curr_comp(char c, complex comp_arr[])
+{
+	switch(c)
+	{
+		complex default_comp = {0, 0};
+		case 'A':
+			return comp_arr[0];
+		case 'B':
+			return comp_arr[1];
+		case 'C':
+			return comp_arr[2];
+		case 'D':
+			return comp_arr[3];
+		case 'E':
+			return comp_arr[4];
+		case 'F':
+			return comp_arr[5];
+		default:
+			return default_comp;
+	}
 }
