@@ -147,9 +147,14 @@ int is_a_valid_complex_name(char *str)
 
 int is_a_valid_comma(char *str)
 {
-	if(str == NULL ||  strlen(str) > 1 || str[0] != ',')
+	if(str == NULL)
 		{
 			printf("Comma is missing.\n");
+			return ERROR;
+		}
+	if(strlen(str) > 1 || str[0] != ',')
+		{
+			printf("Comma is needed.\n");
 			return ERROR;
 		}
 	return SUCCESS;
@@ -174,9 +179,9 @@ int is_a_valid_num(char *str)
 
 int is_a_null(char *str)
 {
-	if(strcmp(str, "\0") == 0 || str == NULL)
+	if(str != NULL)
 		{
-			printf("Too many characters for this operator.\n");
+			printf("Extraneous text after end of command.\n");
 			return ERROR;
 		}
 	return SUCCESS;

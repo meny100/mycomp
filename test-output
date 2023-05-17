@@ -1,0 +1,98 @@
+This program deals actions with complex numbers. There are 6 complex numbers, A-F and 9 actions:
+1) read_comp NAME, REAL1, REAL2.
+2) print_comp NAME.
+3) add_comp NAME1, NAME2.
+4) sub_comp NAME1, NAME2.
+5) mult_comp_real NAME, REAL.
+6) mult_comp_img NAME1, IMG.
+7) mult_comp_comp NAME1, NAME2.
+8) abs_comp NAME.
+9) stop.
+
+Please type your action:
+The line as read from input: print_comp A 
+0.00 + (0.00)i
+
+Please type your action:
+The line as read from input: print_comp B 
+0.00 + (0.00)i
+
+Please type your action:
+The line as read from input: print_comp C 
+0.00 + (0.00)i
+
+Please type your action:
+The line as read from input: read_comp A ,  45.1 ,  -23.75 
+
+Please type your action:
+The line as read from input: print_comp A 
+45.10 - (23.75)i
+
+Please type your action:
+The line as read from input: read_comp B ,  54.2 ,  3.56 
+
+Please type your action:
+The line as read from input: print_comp B 
+54.20 + (3.56)i
+
+Please type your action:
+The line as read from input: read_comp C ,  0 ,  -1 
+
+Please type your action:
+The line as read from input: print_comp C 
+0.00 - (1.00)i
+
+Please type your action:
+The line as read from input: add_comp A ,  B 
+99.30 - (20.19)i
+
+Please type your action:
+The line as read from input: sub_comp C ,  A
+-45.10 + (22.75)i
+
+Please type your action:
+The line as read from input: sub_comp B ,  B 
+0.00 + (0.00)i
+
+Please type your action:
+The line as read from input: sub_comp D ,  A
+-45.10 + (23.75)i
+
+Please type your action:
+The line as read from input: 15 
+Undefined command name.
+
+Please type your action:
+The line as read from input: mult_comp_real A ,  2.51 
+113.20 - (59.61)i
+
+Please type your action:
+The line as read from input: mult_comp_img A ,  -2.564 
+-60.90 - (115.64)i
+
+Please type your action:
+The line as read from input: mult_comp_comp A ,  B 
+2528.97 - (1126.69)i
+
+Please type your action:
+The line as read from input: mult_comp_comp E  ,  C 
+0.00 + (0.00)i
+
+Please type your action:
+The line as read from input: abs_comp A 
+50.97
+
+Please type your action:
+The line as read from input: abs_comp B 
+54.32
+
+Please type your action:
+The line as read from input: abs_comp C 
+1.00
+
+Please type your action:
+The line as read from input: abs_comp F 
+0.00
+
+Please type your action:
+The line as read from input: stop

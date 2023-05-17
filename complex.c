@@ -56,6 +56,6 @@ void mult_comp_comp(complex a, complex b)
 
 void abs_comp(complex comp)
 {
-	float result = sqrt(pow(comp.real, 2) + pow(comp.img, 2));
+	double result = sqrt(pow(comp.real, 2) + pow(comp.img, 2));
 	printf("%.2f\n", result);
 }

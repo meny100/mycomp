@@ -58,16 +58,13 @@ int main()
 
 		/*split the line into tokens and store them in tokens array*/
 		split_input(line_input, tokens_array, TOKENS_ARRAY_SIZE);
-		printf("The splitted input is:\n");
-		for(i = 0; i < TOKENS_ARRAY_SIZE; i++)
-			printf("%d: %s\n", i, tokens_array[i]);
 
 		/*Finding the command. The tokens_array[0] is the command*/
 		for(i = 0; i < CMD_ARR_SIZE; i++)
 			if(strcmp(tokens_array[0], cmd_array[i]) == 0)
 				break;
 			state_cmd = i;
-		printf("state_cmd: %d\n", i);
+
 		/*checking the pattern of the rest of the string according to command was choose.*/
 		valid_line = check_pattern(state_cmd, tokens_array);
 
