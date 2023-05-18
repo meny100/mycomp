@@ -19,6 +19,5 @@ mult_comp_comp E , C
 abs_comp A 
 abs_comp B 
 abs_comp C 
-abs_comp F
-stam
+abs_comp F 
 stop

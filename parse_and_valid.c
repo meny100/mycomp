@@ -1,46 +1,4 @@
-﻿#include "complex.h"
-
-char *read_line_and_add_spaces(char *str, int actual_size)
-{
-	int curr = 0;
-	char *tempP;/*help to free str allocation if realloc failed*/
-	while((str[curr] = getchar()) != EOF && str[curr] != '\n')
-	{
-		/*performing re-allocation if the user type chars more than the given space*/
-		/*if str[curr] == ',' we need to ensure that we have free space ahead to separate it*/
-		if(curr >= actual_size || str[curr] == ',')
-		{
-			tempP = str;
-			/*ENLARGE_SIZE changes the size of actual_size*/
-			str = (char *)realloc(str, ENLARGE_SIZE(actual_size)*sizeof(char));
-			if(str == NULL)
-				{
-					free(tempP);
-					printf("ERROR: allocation failed, no free space found.\n");
-					exit(EXIT_FAILURE);
-				}
-
-			if(str[curr] == ',')
-			{
-				/*separate commas by space*/
-				str[curr] = ' ';
-				str[++curr] = ',';
-				str[++curr] = ' ';
-			}
-		}
-		curr++;
-	}
-
-
-	if(str[curr] == EOF)
-	{
-		printf("ERROR: exit from the program allowed by stop() function only!\n");
-		exit(EXIT_FAILURE);
-	}
-
-	str[curr] = '\0';
-	return str;
-}
+﻿#include "parse_and_valid.h"
 
 void split_input(char *str, char *str_array[], int size)
 {
@@ -125,11 +83,6 @@ int check_pattern(int state_cmd, char *tokens_array[])
 	}
 }
 
-void stop(int *stop_flag)
-{
-	*stop_flag = 1;
-}
-
 int is_a_valid_complex_name(char *str)
 {
 	if(str == NULL)
@@ -185,26 +138,4 @@ int is_a_null(char *str)
 			return ERROR;
 		}
 	return SUCCESS;
-}
-
-complex get_curr_comp(char c, complex comp_arr[])
-{
-	switch(c)
-	{
-		complex default_comp = {0, 0};
-		case 'A':
-			return comp_arr[0];
-		case 'B':
-			return comp_arr[1];
-		case 'C':
-			return comp_arr[2];
-		case 'D':
-			return comp_arr[3];
-		case 'E':
-			return comp_arr[4];
-		case 'F':
-			return comp_arr[5];
-		default:
-			return default_comp;
-	}
 }

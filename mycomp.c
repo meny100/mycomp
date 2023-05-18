@@ -1,15 +1,24 @@
 #include "complex.h"
+#include "parse_and_valid.h"
+
+#define COMP_ARR_SIZE 6
+#define CMD_ARR_SIZE 9
+#define FIRST_SIZE 15
+#define ENLARGE_SIZE(X) (X+=10)
+#define TOKENS_ARRAY_SIZE 7
 
 
+
+char *read_line_and_add_spaces(char *str, int actual_size);
+complex get_curr_comp(char c, complex comp_arr[]);
 
 
 int main()
 {
 	/*Declaration and initialization*/
 	complex A = {0,0}, B = {0,0}, C = {0,0}, D = {0,0}, E = {0,0}, F = {0,0};
-	complex complex_arr[] = {A, B, C, D, E, F};
-	
-	
+	complex complex_arr[COMP_ARR_SIZE];
+
 	int stop_flag = 0;
 	char *cmd_array[CMD_ARR_SIZE] =  {
 			"read_comp",
@@ -23,6 +32,13 @@ int main()
 			"stop",
 		};
 	int state_cmd;
+
+	complex_arr[0] = A;
+	complex_arr[1] = B;
+	complex_arr[2] = C;
+	complex_arr[3] = D;
+	complex_arr[4] = E;
+	complex_arr[5] = F;
 	
 
 	printf("This program deals actions with complex numbers. There are 6 complex numbers, A-F and 9 actions:\n");
@@ -54,7 +70,7 @@ int main()
 			exit(EXIT_FAILURE);
 		}
 		line_input = read_line_and_add_spaces(line_input, FIRST_SIZE);
-		printf("The line as read from input: %s\n", line_input);
+		printf("The line as read from input is: %s\n", line_input);
 
 		/*split the line into tokens and store them in tokens array*/
 		split_input(line_input, tokens_array, TOKENS_ARRAY_SIZE);
@@ -155,4 +171,69 @@ int main()
 		free(line_input);
 	}
 	return 0;
+}
+
+
+char *read_line_and_add_spaces(char *str, int actual_size)
+{
+	int curr = 0;
+	char *tempP;/*help to free str allocation if realloc failed*/
+	while((str[curr] = getchar()) != EOF && str[curr] != '\n')
+	{
+		/*performing re-allocation if the user type chars more than the given space*/
+		/*if str[curr] == ',' we need to ensure that we have free space ahead to separate it*/
+		if(curr >= actual_size || str[curr] == ',')
+		{
+			tempP = str;
+			/*ENLARGE_SIZE changes the size of actual_size*/
+			str = (char *)realloc(str, ENLARGE_SIZE(actual_size)*sizeof(char));
+			if(str == NULL)
+				{
+					free(tempP);
+					printf("ERROR: allocation failed, no free space found.\n");
+					exit(EXIT_FAILURE);
+				}
+
+			if(str[curr] == ',')
+			{
+				/*separate commas by space*/
+				str[curr] = ' ';
+				str[++curr] = ',';
+				str[++curr] = ' ';
+			}
+		}
+		curr++;
+	}
+
+
+	if(str[curr] == EOF)
+	{
+		printf("ERROR: exit from the program allowed by stop() function only!\n");
+		exit(EXIT_FAILURE);
+	}
+
+	str[curr] = '\0';
+	return str;
+}
+
+complex get_curr_comp(char c, complex comp_arr[])
+{
+	switch(c)
+	{
+		complex default_comp = {0, 0};
+		case 'A':
+			return comp_arr[0];
+		case 'B':
+			return comp_arr[1];
+		case 'C':
+			return comp_arr[2];
+		case 'D':
+			return comp_arr[3];
+		case 'E':
+			return comp_arr[4];
+		case 'F':
+			return comp_arr[5];
+		default:
+			return default_comp;
+	}
 }

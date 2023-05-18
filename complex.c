@@ -59,3 +59,8 @@ void abs_comp(complex comp)
 	double result = sqrt(pow(comp.real, 2) + pow(comp.img, 2));
 	printf("%.2f\n", result);
 }
+
+void stop(int *stop_flag)
+{
+	*stop_flag = 1;
+}

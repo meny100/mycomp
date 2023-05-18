@@ -1,2 +1,2 @@
-mycomp: mycomp.c complex.c stringdeal.c
-	gcc -ansi -pedantic -Wall mycomp.c complex.c stringdeal.c -lm -o mycomp
+mycomp: mycomp.c complex.c parse_and_valid.c
+	gcc -ansi -pedantic -Wall mycomp.c complex.c parse_and_valid.c -lm -o mycomp
