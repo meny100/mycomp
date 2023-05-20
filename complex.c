@@ -1,6 +1,6 @@
 #include "complex.h"
 
-
+/*get address of complex and change his value*/
 void read_comp(complex *c, double real, double img)
 {
 	(*c).real = real;
@@ -60,7 +60,3 @@ void abs_comp(complex comp)
 	printf("%.2f\n", result);
 }
 
-void stop(int *stop_flag)
-{
-	*stop_flag = 1;
-}

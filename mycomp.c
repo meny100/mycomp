@@ -8,18 +8,21 @@
 #define TOKENS_ARRAY_SIZE 7
 
 
-
+/*read the line from the input dynamicly and add spaces around commas*/
 char *read_line_and_add_spaces(char *str, int actual_size);
+/*return complex item from the array according the char c*/
 complex get_curr_comp(char c, complex comp_arr[]);
+/*stop the program*/
+void stop(int *stop_flag);
 
 
 int main()
 {
 	/*Declaration and initialization*/
 	complex A = {0,0}, B = {0,0}, C = {0,0}, D = {0,0}, E = {0,0}, F = {0,0};
-	complex complex_arr[COMP_ARR_SIZE];
 
 	int stop_flag = 0;
+	/*array of strings of commands to parse the input according to*/
 	char *cmd_array[CMD_ARR_SIZE] =  {
 			"read_comp",
 			"print_comp",
@@ -33,6 +36,8 @@ int main()
 		};
 	int state_cmd;
 
+	/*array to parse input string to vom[lex variables*/
+	complex complex_arr[COMP_ARR_SIZE];
 	complex_arr[0] = A;
 	complex_arr[1] = B;
 	complex_arr[2] = C;
@@ -54,7 +59,9 @@ int main()
 
 	while (!stop_flag)
 	{
+		/*this line _input will store the input in each command rotation*/
 		char *line_input;
+		/*this array will store the line_input words separating by ' \t'*/
 		char *tokens_array[TOKENS_ARRAY_SIZE] = {NULL};
 		int i;
 		int valid_line;
@@ -69,6 +76,7 @@ int main()
 			printf("Error: memory allocation failed.\n");
 			exit(EXIT_FAILURE);
 		}
+		/*get the input string and store in line_input*/
 		line_input = read_line_and_add_spaces(line_input, FIRST_SIZE);
 		printf("The line as read from input is: %s\n", line_input);
 
@@ -168,6 +176,7 @@ int main()
 			}
 		}
 
+		/*freeing the allocation that points by line_input*/
 		free(line_input);
 	}
 	return 0;
@@ -236,4 +245,9 @@ complex get_curr_comp(char c, complex comp_arr[])
 		default:
 			return default_comp;
 	}
+}
+
+void stop(int *stop_flag)
+{
+	*stop_flag = 1;
 }

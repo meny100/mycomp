@@ -20,4 +20,21 @@ abs_comp A
 abs_comp B 
 abs_comp C 
 abs_comp F 
+read_comp G, 3.1, 6.5
+read_comp a,5,1
+do_it D, 45
+Add_Comp C,B
+read_comp A, ssddf, 44
+read_comp F, 45.7
+read_comp F, 4,4,
+add_comp B
+print_comp C,D
+sub_comp F,,D
+mult_comp_comp F D
+mult_comp_real,A,2.5
+mult_comp_img A,B
+abs_comp
+abs_comp 2.5
+stop A
+stop,
 stop

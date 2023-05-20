@@ -95,4 +95,72 @@ The line as read from input is: abs_comp F
 0.00
 
 Please type your action:
+The line as read from input is: read_comp G ,  3.1 ,  6.5
+Undefined complex variable.
+
+Please type your action:
+The line as read from input is: read_comp a , 5 , 1
+Undefined complex variable.
+
+Please type your action:
+The line as read from input is: do_it D ,  45
+Undefined command name.
+
+Please type your action:
+The line as read from input is: Add_Comp C , B
+Undefined command name.
+
+Please type your action:
+The line as read from input is: read_comp A ,  ssddf ,  44
+Invalid parameter - not a number.
+
+Please type your action:
+The line as read from input is: read_comp F ,  45.7
+Comma is missing.
+
+Please type your action:
+The line as read from input is: read_comp F ,  4 , 4 , 
+Extraneous text after end of command.
+
+Please type your action:
+The line as read from input is: add_comp B
+Comma is missing.
+
+Please type your action:
+The line as read from input is: print_comp C , D
+Extraneous text after end of command.
+
+Please type your action:
+The line as read from input is: sub_comp F ,  , D
+Multiple consecutive commas.
+
+Please type your action:
+The line as read from input is: mult_comp_comp F D
+Comma is needed.
+
+Please type your action:
+The line as read from input is: mult_comp_real , A , 2.5
+Undefined complex variable.
+
+Please type your action:
+The line as read from input is: mult_comp_img A , B
+Invalid parameter - not a number.
+
+Please type your action:
+The line as read from input is: abs_comp
+Complex number name is missing.
+
+Please type your action:
+The line as read from input is: abs_comp 2.5
+Undefined complex variable.
+
+Please type your action:
+The line as read from input is: stop A
+Extraneous text after end of command.
+
+Please type your action:
+The line as read from input is: stop , 
+Extraneous text after end of command.
+
+Please type your action:
 The line as read from input is: stop
